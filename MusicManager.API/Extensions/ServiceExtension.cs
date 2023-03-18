@@ -1,18 +1,17 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using AutoMapper;
+using Microsoft.OpenApi.Models;
+using MusicManager.API.Mapper;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
-namespace MusicManager.API.Extension
+namespace MusicManager.API.Extensions
 {
-
-
     /// <summary>
     /// Extension methods for the Service class.
     /// </summary>
     public static class ServiceExtension
     {
-
-
         /// <summary>
         /// Extension method to add Swagger services to the IServiceCollection.
         /// </summary>
@@ -44,14 +43,11 @@ namespace MusicManager.API.Extension
                 {
                     options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
                     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                    options.JsonSerializerOptions.WriteIndented = true;
                 })
                 ;
         }
-
-        //Configure CORS to allow any origin, header and method. 
-        //Change the CORS policy based on your requirements.
-        //More info see: https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-3.0
-
 
         /// <summary>
         /// Extension method to add CORS services to the IServiceCollection.
@@ -68,6 +64,21 @@ namespace MusicManager.API.Extension
                            .AllowAnyMethod();
                 });
             });
+        }
+
+        /// <summary>
+        /// Adds AutoMapper to the service collection and configures it with the MappingProfile.
+        /// </summary>
+        /// <param name="services">The service collection to add AutoMapper to.</param>
+        public static void AddMappingExtension(this IServiceCollection services)
+        {
+            // Add automapper
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
     }
 }

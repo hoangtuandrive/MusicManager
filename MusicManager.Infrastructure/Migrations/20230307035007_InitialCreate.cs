@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -58,19 +59,13 @@ namespace MusicManager.Infrastructure.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AvatarImg = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Lyric = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ReleaseDate = table.Column<DateTime>(type: "date", nullable: false),
+                    ReleaseDate = table.Column<DateTime>(type: "date", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AlbumId = table.Column<int>(type: "int", nullable: true)
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Song", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Song_Album_AlbumId",
-                        column: x => x.AlbumId,
-                        principalTable: "Album",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -93,6 +88,30 @@ namespace MusicManager.Infrastructure.Migrations
                         name: "FK_AlbumArtist_Artist_ArtistsId",
                         column: x => x.ArtistsId,
                         principalTable: "Artist",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AlbumSong",
+                columns: table => new
+                {
+                    AlbumsId = table.Column<int>(type: "int", nullable: false),
+                    SongsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AlbumSong", x => new { x.AlbumsId, x.SongsId });
+                    table.ForeignKey(
+                        name: "FK_AlbumSong_Album_AlbumsId",
+                        column: x => x.AlbumsId,
+                        principalTable: "Album",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AlbumSong_Song_SongsId",
+                        column: x => x.SongsId,
+                        principalTable: "Song",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -154,6 +173,11 @@ namespace MusicManager.Infrastructure.Migrations
                 column: "ArtistsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AlbumSong_SongsId",
+                table: "AlbumSong",
+                column: "SongsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ArtistSong_SongsId",
                 table: "ArtistSong",
                 column: "SongsId");
@@ -167,11 +191,6 @@ namespace MusicManager.Infrastructure.Migrations
                 name: "IX_Genre_SongId",
                 table: "Genre",
                 column: "SongId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Song_AlbumId",
-                table: "Song",
-                column: "AlbumId");
         }
 
         /// <inheritdoc />
@@ -179,6 +198,9 @@ namespace MusicManager.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AlbumArtist");
+
+            migrationBuilder.DropTable(
+                name: "AlbumSong");
 
             migrationBuilder.DropTable(
                 name: "ArtistSong");
@@ -190,10 +212,10 @@ namespace MusicManager.Infrastructure.Migrations
                 name: "Artist");
 
             migrationBuilder.DropTable(
-                name: "Song");
+                name: "Album");
 
             migrationBuilder.DropTable(
-                name: "Album");
+                name: "Song");
         }
     }
 }

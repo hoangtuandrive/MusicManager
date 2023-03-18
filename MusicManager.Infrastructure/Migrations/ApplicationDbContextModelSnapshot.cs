@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MusicManager.Infrastructure.Data;
+using MusicManager.API.Data;
 
 #nullable disable
 
@@ -35,6 +35,21 @@ namespace MusicManager.Infrastructure.Migrations
                     b.HasIndex("ArtistsId");
 
                     b.ToTable("AlbumArtist");
+                });
+
+            modelBuilder.Entity("AlbumSong", b =>
+                {
+                    b.Property<int>("AlbumsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SongsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AlbumsId", "SongsId");
+
+                    b.HasIndex("SongsId");
+
+                    b.ToTable("AlbumSong");
                 });
 
             modelBuilder.Entity("ArtistSong", b =>
@@ -163,9 +178,6 @@ namespace MusicManager.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AlbumId")
-                        .HasColumnType("int");
-
                     b.Property<string>("AvatarImg")
                         .HasColumnType("nvarchar(max)");
 
@@ -182,15 +194,13 @@ namespace MusicManager.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ReleaseDate")
+                    b.Property<DateTime?>("ReleaseDate")
                         .HasColumnType("date");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AlbumId");
 
                     b.ToTable("Song");
                 });
@@ -206,6 +216,21 @@ namespace MusicManager.Infrastructure.Migrations
                     b.HasOne("MusicManager.Domain.Entities.Artist", null)
                         .WithMany()
                         .HasForeignKey("ArtistsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AlbumSong", b =>
+                {
+                    b.HasOne("MusicManager.Domain.Entities.Album", null)
+                        .WithMany()
+                        .HasForeignKey("AlbumsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MusicManager.Domain.Entities.Song", null)
+                        .WithMany()
+                        .HasForeignKey("SongsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -232,27 +257,18 @@ namespace MusicManager.Infrastructure.Migrations
                         .HasForeignKey("AlbumId");
 
                     b.HasOne("MusicManager.Domain.Entities.Song", null)
-                        .WithMany("Genre")
+                        .WithMany("Genres")
                         .HasForeignKey("SongId");
-                });
-
-            modelBuilder.Entity("MusicManager.Domain.Entities.Song", b =>
-                {
-                    b.HasOne("MusicManager.Domain.Entities.Album", null)
-                        .WithMany("Songs")
-                        .HasForeignKey("AlbumId");
                 });
 
             modelBuilder.Entity("MusicManager.Domain.Entities.Album", b =>
                 {
                     b.Navigation("Genres");
-
-                    b.Navigation("Songs");
                 });
 
             modelBuilder.Entity("MusicManager.Domain.Entities.Song", b =>
                 {
-                    b.Navigation("Genre");
+                    b.Navigation("Genres");
                 });
 #pragma warning restore 612, 618
         }

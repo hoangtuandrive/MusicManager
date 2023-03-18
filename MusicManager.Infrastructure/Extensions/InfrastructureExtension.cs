@@ -1,20 +1,14 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MusicManager.Application.Interfaces.Repositories;
-using MusicManager.Application.Interfaces.Services;
-using MusicManager.Infrastructure.Data;
-using MusicManager.Infrastructure.Mapper;
-using MusicManager.Infrastructure.Repositories;
-using MusicManager.Infrastructure.Services;
+using MusicManager.API.Data;
+using MusicManager.API.Interfaces.Repositories;
+using MusicManager.API.Repositories;
 
 namespace MusicManager.Infrastructure.Extensions
 {
     public static class InfrastructureExtension
     {
-
-
         /// <summary>
         /// Extension method to add Infrastructure services to the IServiceCollection.
         /// </summary>
@@ -30,23 +24,10 @@ namespace MusicManager.Infrastructure.Extensions
 
             services.AddScoped<IArtistRepository, ArtistRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<ISongRepository, SongRepository>();
+            services.AddScoped<IAlbumRepostiory, AlbumRepository>();
+
             #endregion Repositories
-
-
-            #region Services
-
-            services.AddScoped<IArtistService, ArtistService>();
-            services.AddScoped<IGenreService, GenreService>();
-
-            // Add automapper
-            var mapperConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new MappingProfile());
-            });
-            IMapper mapper = mapperConfig.CreateMapper();
-            services.AddSingleton(mapper);
-
-            #endregion Services
 
             return services;
         }

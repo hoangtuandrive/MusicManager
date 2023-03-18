@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MusicManager.Application.Interfaces.Repositories;
-using MusicManager.Infrastructure.Data;
+using MusicManager.API.Data;
+using MusicManager.API.Interfaces.Repositories;
 using System.Linq.Expressions;
 
-namespace MusicManager.Infrastructure.Repositories
+namespace MusicManager.API.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {

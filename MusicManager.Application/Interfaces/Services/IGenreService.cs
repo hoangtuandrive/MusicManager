@@ -1,7 +1,6 @@
-﻿using MusicManager.Application.DTOs;
-using MusicManager.Domain.Entities;
+﻿using MusicManager.Domain.Entities;
 
-namespace MusicManager.Application.Interfaces.Services
+namespace MusicManager.API.Interfaces.Services
 {
     /// <summary>
     /// Interface for Genre Service operations.
@@ -21,22 +20,22 @@ namespace MusicManager.Application.Interfaces.Services
 
 
         /// <summary>
-        /// Creates a new Genre based on the provided GenreDTO.
+        /// Creates a new Genre based on the provided genre.
         /// </summary>
-        Task<bool> CreateGenreAsync(GenreDTO genreDTO);
+        Task<bool> CreateGenreAsync(Genre genre);
 
 
         /// <summary>
         /// Creates multiple genres asynchronously.
         /// </summary>
         /// <param name="genreDTOs">A list of genre data transfer
-        Task<bool> CreateManyGenresAsync(List<GenreDTO> genreDTOs);
+        Task<bool> CreateManyGenresAsync(List<Genre> genres);
 
 
         /// <summary>
-        /// Updates the specified genre with the given genreDTO.
+        /// Updates the specified genre with the given genre.
         /// </summary>
-        Task<bool> UpdateGenreAsync(Genre genre, GenreDTO genreDTO);
+        Task<bool> UpdateGenreAsync(Genre genre);
 
 
         /// <summary>
@@ -50,5 +49,12 @@ namespace MusicManager.Application.Interfaces.Services
         /// </summary>
         /// <param name="name">The name of the genre to find.</param>
         Task<IEnumerable<Genre>> FindGenreByNameAsync(string name);
+
+        /// <summary>
+        /// Asynchronously retrieves a genre by name.
+        /// </summary>
+        /// <param name="name">The name of the genre to retrieve.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the first genre with the specified name or null if no such genre is found.</returns>
+        Task<Genre> GetGenreByNameAsync(string name);
     }
 }

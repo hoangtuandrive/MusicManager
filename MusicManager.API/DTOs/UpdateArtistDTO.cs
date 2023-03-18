@@ -1,9 +1,9 @@
 ﻿using MusicManager.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace MusicManager.Application.DTOs
+namespace MusicManager.API.DTOs
 {
-    public class CreateArtistDTO
+    public class UpdateArtistDTO
     {
         [Required]
         public string Name { get; set; }

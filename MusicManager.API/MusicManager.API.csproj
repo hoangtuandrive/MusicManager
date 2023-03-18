@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Logs\Error\" />
     <Folder Include="Logs\Info\" />
   </ItemGroup>
 

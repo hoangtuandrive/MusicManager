@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MusicManager.Application.DTOs;
-using MusicManager.Application.Interfaces.Services;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using MusicManager.API.DTOs;
+using MusicManager.API.Interfaces.Services;
+using MusicManager.Domain.Entities;
 
 namespace MusicManager.API.Controllers
 {
@@ -15,10 +17,12 @@ namespace MusicManager.API.Controllers
     public class GenreController : ControllerBase
     {
         private readonly IGenreService _genreService;
+        private readonly IMapper _mapper;
 
-        public GenreController(IGenreService genreService)
+        public GenreController(IGenreService genreService, IMapper mapper)
         {
             _genreService = genreService;
+            _mapper = mapper;
         }
 
         /// <summary>      
@@ -61,7 +65,7 @@ namespace MusicManager.API.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateGenreAsync([FromBody] GenreDTO genreDTO)
         {
-            if (await _genreService.CreateGenreAsync(genreDTO))
+            if (await _genreService.CreateGenreAsync(_mapper.Map<Genre>(genreDTO)))
                 return Ok();
             return BadRequest();
         }
@@ -76,7 +80,7 @@ namespace MusicManager.API.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateManyGenresAsync([FromBody] List<GenreDTO> genreDTOs)
         {
-            if (await _genreService.CreateManyGenresAsync(genreDTOs))
+            if (await _genreService.CreateManyGenresAsync(_mapper.Map<List<Genre>>(genreDTOs)))
                 return Ok();
             return BadRequest();
         }
@@ -98,7 +102,7 @@ namespace MusicManager.API.Controllers
             if (genre == null)
                 return NotFound();
 
-            if (await _genreService.UpdateGenreAsync(genre, genreDTO))
+            if (await _genreService.UpdateGenreAsync(_mapper.Map(genreDTO, genre)))
                 return Ok();
 
             return BadRequest();

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using MusicManager.Application.DTOs;
-using MusicManager.Application.Interfaces.Repositories;
-using MusicManager.Application.Interfaces.Services;
+using MusicManager.API.Interfaces.Repositories;
+using MusicManager.API.Interfaces.Services;
+using MusicManager.Application.Models;
 using MusicManager.Domain.Entities;
 
-namespace MusicManager.Infrastructure.Services
+namespace MusicManager.API.Services
 {
     public class ArtistService : IArtistService
     {
@@ -18,9 +18,23 @@ namespace MusicManager.Infrastructure.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Artist>> GetArtistListAsync()
+        public async Task<List<GetArtistResponseModel>> GetArtistListAsync()
         {
-            return await _artistRepo.GetAllAsync();
+            return await _artistRepo.List()
+                .Include(x => x.Albums)
+                .Include(x => x.Songs)
+                .Select(p => _mapper.Map<GetArtistResponseModel>(p))
+                .ToListAsync();
+        }
+
+        public async Task<GetArtistResponseModel> GetArtistResponseModelByIdAsync(int id)
+        {
+            return await _artistRepo.List()
+                .Where(x => x.Id == id)
+                .Include(x => x.Albums)
+                .Include(x => x.Songs)
+                .Select(p => _mapper.Map<GetArtistResponseModel>(p))
+                .FirstOrDefaultAsync();
         }
 
         public async Task<Artist> GetArtistByIdAsync(int id)
@@ -31,14 +45,12 @@ namespace MusicManager.Infrastructure.Services
         /// <summary>
         /// Async method uses for creating an artist.
         /// </summary>
-        /// <param name="createArtistDTO"></param>
+        /// <param name="artist"></param>
         /// <returns>
         /// True if created successfully, else returns false.
         /// </returns>
-        public async Task<bool> CreateArtistAsync(CreateArtistDTO createArtistDTO)
+        public async Task<bool> CreateArtistAsync(Artist artist)
         {
-            Artist artist = _mapper.Map<Artist>(createArtistDTO);
-
             artist.CreatedOn = DateTime.Now;
             artist.UpdatedOn = DateTime.Now;
 
@@ -50,13 +62,11 @@ namespace MusicManager.Infrastructure.Services
         /// <summary>
         /// Async method uses for creating many artists.
         /// </summary>
-        /// <param name="createManyArtistsDTO"></param>
+        /// <param name="artists"></param>
         /// <returns>
         /// True if created successfully, else returns false.</returns>
-        public async Task<bool> CreateManyArtistsAsync(List<CreateArtistDTO> createManyArtistsDTO)
+        public async Task<bool> CreateManyArtistsAsync(List<Artist> artists)
         {
-            List<Artist> artists = _mapper.Map<List<Artist>>(createManyArtistsDTO);
-
             foreach (var artist in artists)
             {
                 artist.CreatedOn = DateTime.Now;
@@ -72,15 +82,12 @@ namespace MusicManager.Infrastructure.Services
         /// Async method uses for updating an artist.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="updateArtistDTO"></param>
         /// <returns>
         /// True if update artist successfully. 
         /// False if there's no artist in the database, or update artist failed.
         /// </returns>
-        public async Task<bool> UpdateArtistAsync(Artist artist, UpdateArtistDTO updateArtistDTO)
+        public async Task<bool> UpdateArtistAsync(Artist artist)
         {
-            _mapper.Map(updateArtistDTO, artist);
-
             _artistRepo.Update(artist);
             return await _artistRepo.CompleteAsync();
         }
@@ -89,7 +96,6 @@ namespace MusicManager.Infrastructure.Services
         /// Async method uses for deleting an artist.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="updateArtistDTO"></param>
         /// <returns>
         /// True if update artist successfully. 
         /// False if there's no artist in the database, or update artist failed.
@@ -105,9 +111,25 @@ namespace MusicManager.Infrastructure.Services
         /// </summary>
         /// <param name="name"></param>
         /// <returns>A list of artists whether the specified name substring occured in the artist's name</returns>
-        public async Task<IEnumerable<Artist>> FindArtistByNameAsync(string name)
+        public async Task<List<GetArtistResponseModel>> FindArtistByNameAsync(string name)
         {
-            return await _artistRepo.List().Where(x => x.Name.Contains(name)).ToListAsync();
+            return await _artistRepo.List()
+                .Where(x => x.Name.Contains(name))
+                .Include(x => x.Albums)
+                .Include(x => x.Songs)
+                .Select(p => _mapper.Map<GetArtistResponseModel>(p))
+                .ToListAsync();
+        }
+
+
+        /// <summary>
+        /// Asynchronously retrieves an artist by name.
+        /// </summary>
+        /// <param name="name">The name of the artist to retrieve.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the first artist with the specified name or null if no such artist is found.</returns>
+        public async Task<Artist> GetArtistByNameAsync(string name)
+        {
+            return await _artistRepo.List().Where(x => x.Name.Equals(name)).FirstOrDefaultAsync();
         }
     }
 }

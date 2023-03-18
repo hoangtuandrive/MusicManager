@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MusicManager.Application.DTOs;
 using MusicManager.Application.Interfaces.Services;
-using MusicManager.Domain.DTOs;
 
 namespace MusicManager.API.Controllers
 {

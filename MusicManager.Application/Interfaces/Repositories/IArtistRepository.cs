@@ -2,17 +2,6 @@
 
 namespace MusicManager.Application.Interfaces.Repositories
 {
-
-
-
-
-    /// <summary>
-    /// Represents an interface for an Artist Repository which inherits from IBaseRepository.
-    /// </summary>
-
-
-
-
     /// <summary>
     /// Represents an interface for an Artist Repository which inherits from IBaseRepository.
     /// </summary>

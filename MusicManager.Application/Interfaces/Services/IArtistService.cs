@@ -1,4 +1,4 @@
-﻿using MusicManager.Domain.DTOs;
+﻿using MusicManager.Application.DTOs;
 using MusicManager.Domain.Entities;
 
 namespace MusicManager.Application.Interfaces.Services
@@ -50,12 +50,6 @@ namespace MusicManager.Application.Interfaces.Services
         /// <summary>
         /// Asynchronously updates an Artist with the given UpdateArtistDTO.
         /// </summary>
-
-
-        /// <summary>
-        /// Asynchronously creates multiple artists from a list of CreateManyArtistsDTO objects.
-        /// </summary>
-        Task<bool> CreateManyArtistsAsync(List<CreateArtistDTO> createManyArtistsDTO);
 
 
         /// <summary>

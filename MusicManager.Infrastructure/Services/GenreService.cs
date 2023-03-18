@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using MusicManager.Application.DTOs;
 using MusicManager.Application.Interfaces.Repositories;
 using MusicManager.Application.Interfaces.Services;
-using MusicManager.Domain.DTOs;
 using MusicManager.Domain.Entities;
 
 namespace MusicManager.Infrastructure.Services

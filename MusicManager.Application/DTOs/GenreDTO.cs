@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MusicManager.Domain.DTOs
+namespace MusicManager.Application.DTOs
 {
     public class GenreDTO
     {

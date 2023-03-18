@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MusicManager.Domain.DTOs;
+using MusicManager.Application.DTOs;
 using MusicManager.Domain.Entities;
 
 namespace MusicManager.Infrastructure.Mapper

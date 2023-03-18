@@ -2,13 +2,6 @@
 
 namespace MusicManager.Application.Interfaces.Repositories
 {
-
-
-    /// <summary>
-    /// Interface for Base Repository.
-    /// </summary>
-
-
     /// <summary>
     /// Interface for Base Repository.
     /// </summary>

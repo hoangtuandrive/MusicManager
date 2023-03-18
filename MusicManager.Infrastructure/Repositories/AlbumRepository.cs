@@ -4,9 +4,9 @@ using MusicManager.Domain.Entities;
 
 namespace MusicManager.API.Repositories
 {
-    public class GenreRepository : BaseRepository<Genre>, IGenreRepository
+    public class AlbumRepository : BaseRepository<Album>, IAlbumRepostiory
     {
-        public GenreRepository(ApplicationDbContext context) : base(context)
+        public AlbumRepository(ApplicationDbContext context) : base(context)
         {
         }
     }

@@ -18,7 +18,7 @@ namespace MusicManager.Domain.Entities
         public string? AvatarImg { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
-        public ICollection<Album> Albums { get; set; }
-        public ICollection<Song> Songs { get; set; }
+        public ICollection<Album>? Albums { get; set; }
+        public ICollection<Song>? Songs { get; set; }
     }
 }

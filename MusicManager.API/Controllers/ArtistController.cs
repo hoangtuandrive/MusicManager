@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MusicManager.Application.DTOs;
-using MusicManager.Application.Interfaces.Services;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using MusicManager.API.DTOs;
+using MusicManager.API.Interfaces.Services;
+using MusicManager.Domain.Entities;
 
 namespace MusicManager.API.Controllers
 {
-
-
     /// <summary>
     /// Controller class for managing Artists.
     /// </summary>
@@ -15,10 +15,12 @@ namespace MusicManager.API.Controllers
     public class ArtistController : ControllerBase
     {
         private readonly IArtistService _artistService;
+        private readonly IMapper _mapper;
 
-        public ArtistController(IArtistService artistService)
+        public ArtistController(IArtistService artistService, IMapper mapper)
         {
             _artistService = artistService;
+            _mapper = mapper;
         }
 
         /// <summary>      
@@ -43,7 +45,7 @@ namespace MusicManager.API.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> FetchArtistAsync([FromRoute] int id)
         {
-            var artist = await _artistService.GetArtistByIdAsync(id);
+            var artist = await _artistService.GetArtistResponseModelByIdAsync(id);
 
             if (artist == null)
                 return NotFound();
@@ -61,7 +63,9 @@ namespace MusicManager.API.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateArtistAsync([FromBody] CreateArtistDTO createArtistDTO)
         {
-            if (await _artistService.CreateArtistAsync(createArtistDTO))
+            Artist artist = _mapper.Map<Artist>(createArtistDTO);
+
+            if (await _artistService.CreateArtistAsync(_mapper.Map<Artist>(createArtistDTO)))
                 return Ok();
             return BadRequest();
         }
@@ -76,7 +80,7 @@ namespace MusicManager.API.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateManyArtistsAsync([FromBody] List<CreateArtistDTO> createManyArtistsDTO)
         {
-            if (await _artistService.CreateManyArtistsAsync(createManyArtistsDTO))
+            if (await _artistService.CreateManyArtistsAsync(_mapper.Map<List<Artist>>(createManyArtistsDTO)))
                 return Ok();
             return BadRequest();
         }
@@ -98,7 +102,7 @@ namespace MusicManager.API.Controllers
             if (artist == null)
                 return NotFound();
 
-            if (await _artistService.UpdateArtistAsync(artist, updateArtistDTO))
+            if (await _artistService.UpdateArtistAsync(_mapper.Map(updateArtistDTO, artist)))
                 return Ok();
 
             return BadRequest();

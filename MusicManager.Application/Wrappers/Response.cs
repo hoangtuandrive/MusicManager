@@ -1,4 +1,4 @@
-﻿namespace MusicManager.Application.Wrappers
+﻿namespace MusicManager.API.Wrappers
 
 {
     /// <summary>

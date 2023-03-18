@@ -1,11 +1,9 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using MusicManager.Application.DTOs;
-using MusicManager.Application.Interfaces.Repositories;
-using MusicManager.Application.Interfaces.Services;
+﻿using Microsoft.EntityFrameworkCore;
+using MusicManager.API.Interfaces.Repositories;
+using MusicManager.API.Interfaces.Services;
 using MusicManager.Domain.Entities;
 
-namespace MusicManager.Infrastructure.Services
+namespace MusicManager.API.Services
 {
     /// <summary>
     /// Represents a service for managing genres.
@@ -13,12 +11,10 @@ namespace MusicManager.Infrastructure.Services
     public class GenreService : IGenreService
     {
         private readonly IGenreRepository _genreRepo;
-        private readonly IMapper _mapper;
 
-        public GenreService(IGenreRepository genreRepository, IMapper mapper)
+        public GenreService(IGenreRepository genreRepository)
         {
             _genreRepo = genreRepository;
-            _mapper = mapper;
         }
 
         public async Task<IEnumerable<Genre>> GetGenreListAsync()
@@ -31,10 +27,8 @@ namespace MusicManager.Infrastructure.Services
             return await _genreRepo.GetByIdAsync(id);
         }
 
-        public async Task<bool> CreateGenreAsync(GenreDTO genreDTO)
+        public async Task<bool> CreateGenreAsync(Genre genre)
         {
-            Genre genre = _mapper.Map<Genre>(genreDTO);
-
             genre.CreatedOn = DateTime.Now;
             genre.UpdatedOn = DateTime.Now;
 
@@ -43,10 +37,8 @@ namespace MusicManager.Infrastructure.Services
             return false;
         }
 
-        public async Task<bool> CreateManyGenresAsync(List<GenreDTO> genreDTOs)
+        public async Task<bool> CreateManyGenresAsync(List<Genre> genres)
         {
-            List<Genre> genres = _mapper.Map<List<Genre>>(genreDTOs);
-
             foreach (var genre in genres)
             {
                 genre.CreatedOn = DateTime.Now;
@@ -58,10 +50,8 @@ namespace MusicManager.Infrastructure.Services
             return false;
         }
 
-        public async Task<bool> UpdateGenreAsync(Genre genre, GenreDTO genreDTO)
+        public async Task<bool> UpdateGenreAsync(Genre genre)
         {
-            _mapper.Map(genreDTO, genre);
-
             _genreRepo.Update(genre);
             return await _genreRepo.CompleteAsync();
         }
@@ -75,6 +65,16 @@ namespace MusicManager.Infrastructure.Services
         public async Task<IEnumerable<Genre>> FindGenreByNameAsync(string name)
         {
             return await _genreRepo.List().Where(x => x.Name.Contains(name)).ToListAsync();
+        }
+
+        /// <summary>
+        /// Asynchronously retrieves a genre by name.
+        /// </summary>
+        /// <param name="name">The name of the genre to retrieve.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the first genre with the specified name or null if no such genre is found.</returns>
+        public async Task<Genre> GetGenreByNameAsync(string name)
+        {
+            return await _genreRepo.List().Where(x => x.Name.Equals(name)).FirstOrDefaultAsync();
         }
     }
 }

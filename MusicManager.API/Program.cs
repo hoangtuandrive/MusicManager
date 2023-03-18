@@ -1,10 +1,12 @@
-using MusicManager.API.Extension;
+using MusicManager.API.Extensions;
+using MusicManager.Application.Extensions;
 using MusicManager.Infrastructure.Extensions;
 using Serilog;
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
+
     // load up serilog configuraton
     Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
@@ -12,12 +14,15 @@ try
     builder.Host.UseSerilog(Log.Logger);
 
     // Extensions 
+    builder.Services.AddApplicationExtension();
     builder.Services.AddInfrastructureExtension(builder.Configuration);
+
+    builder.Services.AddMappingExtension();
     builder.Services.AddSwaggerExtension();
     builder.Services.AddControllersExtension();
     builder.Services.AddCorsExtension();
 
-    // API Explorer
+    // API Explorer 
     builder.Services.AddMvcCore()
         .AddApiExplorer();
 
@@ -45,10 +50,15 @@ try
 
     Log.Information("Application Starting");
 }
+catch (HostAbortedException e)
+{
+    Log.Warning("Warning: Host aborted!");
+}
 catch (Exception ex)
 {
     Log.Warning(ex, "An error occurred starting the application");
 }
+
 finally
 {
     Log.CloseAndFlush();

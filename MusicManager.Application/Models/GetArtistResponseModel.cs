@@ -1,10 +1,11 @@
 ﻿using MusicManager.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace MusicManager.Application.DTOs
+namespace MusicManager.Application.Models
 {
-    public class UpdateArtistDTO
+    public class GetArtistResponseModel
     {
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         public Gender? Gender { get; set; }
@@ -12,5 +13,9 @@ namespace MusicManager.Application.DTOs
         public DateTime? DateOfBirth { get; set; }
         public string? Country { get; set; }
         public string? AvatarImg { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
+        public ICollection<AlbumResponseModel>? Albums { get; set; }
+        public ICollection<SongResponseModel>? Songs { get; set; }
     }
 }

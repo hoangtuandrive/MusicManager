@@ -18,31 +18,38 @@ namespace MusicManager.Infrastructure.Repositories
             await _context.Set<T>().AddAsync(entity);
             return true;
         }
+
         public async Task<bool> AddRangeAsync(IEnumerable<T> entities)
         {
             await _context.Set<T>().AddRangeAsync(entities);
             return true;
         }
+
         public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
         {
             return _context.Set<T>().Where(expression);
         }
+
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
         }
+
         public async Task<T> GetByIdAsync(int id)
         {
             return await _context.Set<T>().FindAsync(id);
         }
+
         public void Remove(T entity)
         {
             _context.Set<T>().Remove(entity);
         }
+
         public void RemoveRange(IEnumerable<T> entities)
         {
             _context.Set<T>().RemoveRange(entities);
         }
+
         public void Update(T entity)
         {
             _context.Set<T>().Update(entity);

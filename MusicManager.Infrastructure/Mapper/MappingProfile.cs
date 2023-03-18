@@ -8,7 +8,8 @@ namespace MusicManager.Infrastructure.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<Artist, CreateArtistDTO>().ReverseMap();
+            CreateMap<CreateArtistDTO, Artist>();
+            CreateMap<UpdateArtistDTO, Artist>();
         }
     }
 }

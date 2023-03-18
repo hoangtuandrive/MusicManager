@@ -8,7 +8,8 @@ namespace MusicManager.Application.Interfaces.Services
         Task<IEnumerable<Artist>> GetArtistListAsync();
         Task<Artist> GetArtistByIdAsync(int id);
         Task<bool> CreateArtistAsync(CreateArtistDTO createArtist);
-        Task<bool> UpdateArtistAsync(int id, UpdateArtistDTO updateArtistDTO);
+        Task<bool> UpdateArtistAsync(Artist artist, UpdateArtistDTO updateArtistDTO);
         Task<bool> DeleteArtistAsync(Artist artist);
+        Task<IEnumerable<Artist>> FindArtistByNameAsync(string name);
     }
 }

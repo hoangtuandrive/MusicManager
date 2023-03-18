@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MusicManager.API.DTOs;
-using MusicManager.API.Interfaces.Services;
+using MusicManager.Application.Interfaces.Services;
 using MusicManager.Domain.Entities;
 
 namespace MusicManager.API.Controllers

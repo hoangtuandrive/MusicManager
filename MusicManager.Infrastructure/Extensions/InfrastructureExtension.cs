@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MusicManager.API.Data;
-using MusicManager.API.Interfaces.Repositories;
-using MusicManager.API.Repositories;
+using MusicManager.Application.Interfaces.Repositories;
+using MusicManager.Infrastructure.Context;
+using MusicManager.Infrastructure.Repositories;
 
 namespace MusicManager.Infrastructure.Extensions
 {

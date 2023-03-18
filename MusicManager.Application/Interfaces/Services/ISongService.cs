@@ -1,7 +1,7 @@
 ﻿using MusicManager.Application.Models;
 using MusicManager.Domain.Entities;
 
-namespace MusicManager.API.Interfaces.Services
+namespace MusicManager.Application.Interfaces.Services
 {
     /// <summary>
     /// Interface for providing services related to Songs.

@@ -1,6 +1,6 @@
 ﻿using MusicManager.Domain.Entities;
 
-namespace MusicManager.API.Interfaces.Repositories
+namespace MusicManager.Application.Interfaces.Repositories
 {
     /// <summary>
     /// Represents an interface for a Genre Repository that inherits from the IBaseRepository interface.

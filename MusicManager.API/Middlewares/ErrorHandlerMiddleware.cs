@@ -1,5 +1,5 @@
-﻿using MusicManager.API.Exceptions;
-using MusicManager.API.Wrappers;
+﻿using MusicManager.Application.Exceptions;
+using MusicManager.Application.Wrappers;
 using System.Net;
 using System.Text.Json;
 

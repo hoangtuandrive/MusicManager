@@ -1,4 +1,6 @@
-﻿namespace MusicManager.API.Extension
+﻿using MusicManager.API.Middlewares;
+
+namespace MusicManager.API.Extension
 {
     public static class AppExtension
     {
@@ -9,6 +11,14 @@
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "MusicManager.WebApi");
             });
+        }
+
+        /// <summary>
+        /// Adds the error handling middleware to the application.
+        /// </summary>
+        public static void UseErrorHandlingMiddleware(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<ErrorHandlerMiddleware>();
         }
     }
 }

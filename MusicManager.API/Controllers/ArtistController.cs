@@ -16,7 +16,6 @@ namespace MusicManager.API.Controllers
             _artistService = artistService;
         }
 
-
         /// <summary>      
         /// Returns a list of artists.
         /// </summary>

@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MusicManager.API.DTOs;
-using MusicManager.API.Interfaces.Services;
+using MusicManager.Application.Interfaces.Services;
 using MusicManager.Domain.Entities;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MusicManager.API.Controllers
 {

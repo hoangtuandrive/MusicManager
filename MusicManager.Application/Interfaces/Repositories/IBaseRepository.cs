@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace MusicManager.API.Interfaces.Repositories
+namespace MusicManager.Application.Interfaces.Repositories
 {
     /// <summary>
     /// Interface for Base Repository.

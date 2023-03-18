@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MusicManager.API.Interfaces.Repositories;
-using MusicManager.API.Interfaces.Services;
+using MusicManager.Application.Interfaces.Repositories;
+using MusicManager.Application.Interfaces.Services;
 using MusicManager.Domain.Entities;
 
-namespace MusicManager.API.Services
+namespace MusicManager.Application.Services
 {
     /// <summary>
     /// Represents a service for managing genres.

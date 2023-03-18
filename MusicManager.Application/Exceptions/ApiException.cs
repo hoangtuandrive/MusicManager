@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace MusicManager.API.Exceptions
+namespace MusicManager.Application.Exceptions
 {
 
 

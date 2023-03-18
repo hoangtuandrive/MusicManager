@@ -1,6 +1,6 @@
 ﻿using MusicManager.Domain.Entities;
 
-namespace MusicManager.API.Interfaces.Repositories
+namespace MusicManager.Application.Interfaces.Repositories
 {
     public interface ISongRepository : IBaseRepository<Song>
     {

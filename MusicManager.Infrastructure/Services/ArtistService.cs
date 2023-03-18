@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MusicManager.Application.Interfaces.Repositories;
 using MusicManager.Application.Interfaces.Services;
 using MusicManager.Domain.DTOs;
@@ -47,6 +48,27 @@ namespace MusicManager.Infrastructure.Services
         }
 
         /// <summary>
+        /// Async method uses for creating many artists.
+        /// </summary>
+        /// <param name="createManyArtistsDTO"></param>
+        /// <returns>
+        /// True if created successfully, else returns false.</returns>
+        public async Task<bool> CreateManyArtistsAsync(List<CreateArtistDTO> createManyArtistsDTO)
+        {
+            List<Artist> artists = _mapper.Map<List<Artist>>(createManyArtistsDTO);
+
+            foreach (var artist in artists)
+            {
+                artist.CreatedOn = DateTime.Now;
+                artist.UpdatedOn = DateTime.Now;
+            }
+
+            if (await _artistRepo.AddRangeAsync(artists))
+                return await _artistRepo.CompleteAsync();
+            return false;
+        }
+
+        /// <summary>
         /// Async method uses for updating an artist.
         /// </summary>
         /// <param name="id"></param>
@@ -85,7 +107,7 @@ namespace MusicManager.Infrastructure.Services
         /// <returns>A list of artists whether the specified name substring occured in the artist's name</returns>
         public async Task<IEnumerable<Artist>> FindArtistByNameAsync(string name)
         {
-            return await _artistRepo.FindArtistByNameAsync(name);
+            return await _artistRepo.List().Where(x => x.Name.Contains(name)).ToListAsync();
         }
     }
 }

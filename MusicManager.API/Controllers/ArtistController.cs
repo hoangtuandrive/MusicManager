@@ -4,6 +4,9 @@ using MusicManager.Domain.DTOs;
 
 namespace MusicManager.API.Controllers
 {
+    /// <summary>
+    /// Controller class for managing Artists.
+    /// </summary>
     [Route("api/artists")]
     [Produces("application/json")]
     [ApiController]
@@ -15,7 +18,6 @@ namespace MusicManager.API.Controllers
         {
             _artistService = artistService;
         }
-
 
         /// <summary>      
         /// Returns a list of artists.
@@ -29,6 +31,23 @@ namespace MusicManager.API.Controllers
             return Ok(artistList);
         }
 
+        /// <summary>      
+        /// Finds an artist by id
+        /// </summary>
+        /// <response code="200">Returns an artist by id.</response>
+        /// <response code="404">Artist not found.</response>
+        [HttpGet("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> FetchArtistAsync([FromRoute] int id)
+        {
+            var artist = await _artistService.GetArtistByIdAsync(id);
+
+            if (artist == null)
+                return NotFound();
+
+            return Ok(artist);
+        }
 
         /// <summary>      
         /// Creates a new artist.
@@ -41,6 +60,21 @@ namespace MusicManager.API.Controllers
         public async Task<IActionResult> CreateArtistAsync([FromBody] CreateArtistDTO createArtistDTO)
         {
             if (await _artistService.CreateArtistAsync(createArtistDTO))
+                return Ok();
+            return BadRequest();
+        }
+
+        /// <summary>      
+        /// Creates many artists.
+        /// </summary>
+        /// <response code="200"> Creates many artists successfully</response>
+        /// <response code="400"> Creates many artists failed</response>
+        [HttpPost("add-range")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> CreateManyArtistsAsync([FromBody] List<CreateArtistDTO> createManyArtistsDTO)
+        {
+            if (await _artistService.CreateManyArtistsAsync(createManyArtistsDTO))
                 return Ok();
             return BadRequest();
         }

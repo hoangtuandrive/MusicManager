@@ -4,8 +4,18 @@ using System.Text.Json;
 
 namespace MusicManager.API.Extension
 {
+
+
+    /// <summary>
+    /// Extension methods for the Service class.
+    /// </summary>
     public static class ServiceExtension
     {
+
+
+        /// <summary>
+        /// Extension method to add Swagger services to the IServiceCollection.
+        /// </summary>
         public static void AddSwaggerExtension(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
@@ -23,6 +33,10 @@ namespace MusicManager.API.Extension
                 c.IncludeXmlComments(xmlPath);
             });
         }
+
+        /// <summary>
+        /// Extension method to add controllers to the IServiceCollection.
+        /// </summary>
         public static void AddControllersExtension(this IServiceCollection services)
         {
             services.AddControllers()
@@ -37,6 +51,11 @@ namespace MusicManager.API.Extension
         //Configure CORS to allow any origin, header and method. 
         //Change the CORS policy based on your requirements.
         //More info see: https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-3.0
+
+
+        /// <summary>
+        /// Extension method to add CORS services to the IServiceCollection.
+        /// </summary>
         public static void AddCorsExtension(this IServiceCollection services)
         {
             services.AddCors(options =>

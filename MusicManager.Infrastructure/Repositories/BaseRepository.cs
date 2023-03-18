@@ -65,5 +65,10 @@ namespace MusicManager.Infrastructure.Repositories
         {
             _context.Dispose();
         }
+
+        public IQueryable<T> List()
+        {
+            return _context.Set<T>().Where(_ => true);
+        }
     }
 }

@@ -13,6 +13,12 @@ namespace MusicManager.Infrastructure.Extensions
 {
     public static class InfrastructureExtension
     {
+        /// <summary>
+        /// Extension method to add Infrastructure services to the IServiceCollection.
+        /// </summary>
+        /// <param name="services">The IServiceCollection to add services to.</param>
+        /// <param name="configuration">The configuration to use for the services.</param>
+        /// <returns>The IServiceCollection with the added services.</returns>
         public static IServiceCollection AddInfrastructureExtension(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>

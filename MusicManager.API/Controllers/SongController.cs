@@ -231,5 +231,94 @@ namespace MusicManager.API.Controllers
             var songList = await _songService.FindSongByNameAsync(name);
             return Ok(songList);
         }
+
+        /// <summary>      
+        /// Adds artist to song
+        /// </summary>
+        /// <response code="200"> Add artist to song successfully</response>
+        /// <response code="400"> Add artist to song failed</response>
+        /// <response code="404"> Cannot find the artist</response>
+        [HttpPatch("add-artist")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> AddArtistToSongAsync([FromQuery] int songId, [FromQuery] int artistId)
+        {
+            var artist = await _artistService.GetArtistByIdAsync(artistId);
+
+            if (artist == null)
+                return NotFound();
+
+            if (await _songService.AddArtistToSongAsync(songId, artist))
+                return Ok();
+            return BadRequest();
+        }
+
+
+        /// <summary>      
+        /// Removes artist from song
+        /// </summary>
+        /// <response code="200"> Remove artist from song successfully</response>
+        /// <response code="400"> Remove artist from song failed</response>
+        /// <response code="404"> Cannot find the artist</response>
+        [HttpPatch("remove-artist")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> RemoveArtistFromSongAsync([FromQuery] int songId, [FromQuery] int artistId)
+        {
+            var artist = await _artistService.GetArtistByIdAsync(artistId);
+
+            if (artist == null)
+                return NotFound();
+
+            if (await _songService.RemoveArtistFromSongAsync(songId, artist))
+                return Ok();
+            return BadRequest();
+        }
+
+        /// <summary>      
+        /// Adds genre to song
+        /// </summary>
+        /// <response code="200"> Add genre to song successfully</response>
+        /// <response code="400"> Add genre to song failed</response>
+        /// <response code="404"> Cannot find the genre</response>
+        [HttpPatch("add-genre")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> AddGenreToSongAsync([FromQuery] int songId, [FromQuery] int genreId)
+        {
+            var genre = await _genreService.GetGenreByIdAsync(genreId);
+
+            if (genre == null)
+                return NotFound();
+
+            if (await _songService.AddGenreToSongAsync(songId, genre))
+                return Ok();
+            return BadRequest();
+        }
+
+        /// <summary>      
+        /// Removes genre from song
+        /// </summary>
+        /// <response code="200"> Remove genre from song successfully</response>
+        /// <response code="400"> Remove genre from song failed</response>
+        /// <response code="404"> Cannot find the genre</response>
+        [HttpPatch("remove-genre")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> RemoveGenreFromSongAsync([FromQuery] int songId, [FromQuery] int genreId)
+        {
+            var genre = await _genreService.GetGenreByIdAsync(genreId);
+
+            if (genre == null)
+                return NotFound();
+
+            if (await _songService.RemoveGenreFromSongAsync(songId, genre))
+                return Ok();
+            return BadRequest();
+        }
     }
 }

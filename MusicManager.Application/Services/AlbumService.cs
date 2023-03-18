@@ -10,7 +10,6 @@ namespace MusicManager.API.Services
     public class AlbumService : IAlbumService
     {
         private readonly IAlbumRepostiory _albumRepo;
-        private readonly ISongRepository _songRepo;
         private readonly IMapper _mapper;
 
         public AlbumService(IAlbumRepostiory album, IMapper mapper)
@@ -138,31 +137,91 @@ namespace MusicManager.API.Services
 
         public async Task<bool> AddSongToAlbumAsync(int albumId, Song song)
         {
-            var albumDb = await _albumRepo.List()
+            var album = await _albumRepo.List()
                 .Where(x => x.Id == albumId)
               .Include(x => x.Songs)
               .FirstOrDefaultAsync();
 
-            if (albumDb == null)
+            if (album == null)
                 return false;
-            albumDb.Songs.Add(song);
+            album.Songs.Add(song);
 
-            _albumRepo.Update(albumDb);
+            _albumRepo.Update(album);
             return await _albumRepo.CompleteAsync();
         }
 
         public async Task<bool> RemoveSongFromAlbumAsync(int albumId, Song song)
         {
-            var albumDb = await _albumRepo.List()
+            var album = await _albumRepo.List()
                 .Where(x => x.Id == albumId)
               .Include(x => x.Songs)
               .FirstOrDefaultAsync();
 
-            if (albumDb == null)
+            if (album == null)
                 return false;
-            albumDb.Songs.Remove(song);
+            album.Songs.Remove(song);
 
-            _albumRepo.Update(albumDb);
+            _albumRepo.Update(album);
+            return await _albumRepo.CompleteAsync();
+        }
+
+        public async Task<bool> AddArtistToAlbumAsync(int albumId, Artist artist)
+        {
+            var album = await _albumRepo.List()
+               .Where(x => x.Id == albumId)
+             .Include(x => x.Artists)
+             .FirstOrDefaultAsync();
+
+            if (album == null)
+                return false;
+            album.Artists.Add(artist);
+
+            _albumRepo.Update(album);
+            return await _albumRepo.CompleteAsync();
+        }
+
+        public async Task<bool> RemoveArtistFromAlbumAsync(int albumId, Artist artist)
+        {
+            var album = await _albumRepo.List()
+               .Where(x => x.Id == albumId)
+             .Include(x => x.Artists)
+             .FirstOrDefaultAsync();
+
+            if (album == null)
+                return false;
+            album.Artists.Remove(artist);
+
+            _albumRepo.Update(album);
+            return await _albumRepo.CompleteAsync();
+        }
+
+        public async Task<bool> AddGenreToAlbumAsync(int albumId, Genre genre)
+        {
+            var album = await _albumRepo.List()
+               .Where(x => x.Id == albumId)
+             .Include(x => x.Genres)
+             .FirstOrDefaultAsync();
+
+            if (album == null)
+                return false;
+            album.Genres.Add(genre);
+
+            _albumRepo.Update(album);
+            return await _albumRepo.CompleteAsync();
+        }
+
+        public async Task<bool> RemoveGenreFromAlbumAsync(int albumId, Genre genre)
+        {
+            var album = await _albumRepo.List()
+               .Where(x => x.Id == albumId)
+             .Include(x => x.Genres)
+             .FirstOrDefaultAsync();
+
+            if (album == null)
+                return false;
+            album.Genres.Remove(genre);
+
+            _albumRepo.Update(album);
             return await _albumRepo.CompleteAsync();
         }
     }

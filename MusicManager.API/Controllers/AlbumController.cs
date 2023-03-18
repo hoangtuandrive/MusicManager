@@ -216,5 +216,93 @@ namespace MusicManager.API.Controllers
                 return Ok();
             return BadRequest();
         }
+
+        /// <summary>      
+        /// Adds artist to album
+        /// </summary>
+        /// <response code="200"> Add artist to album successfully</response>
+        /// <response code="400"> Add artist to album failed</response>
+        /// <response code="404"> Cannot find the artist</response>
+        [HttpPatch("add-artist")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> AddArtistToAlbumAsync([FromQuery] int albumId, [FromQuery] int artistId)
+        {
+            var artist = await _artistService.GetArtistByIdAsync(artistId);
+
+            if (artist == null)
+                return NotFound();
+
+            if (await _albumService.AddArtistToAlbumAsync(albumId, artist))
+                return Ok();
+            return BadRequest();
+        }
+
+        /// <summary>      
+        /// Removes artist from album
+        /// </summary>
+        /// <response code="200"> Remove artist from album successfully</response>
+        /// <response code="400"> Remove artist from album failed</response>
+        /// <response code="404"> Cannot find the artist</response>
+        [HttpPatch("remove-artist")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> RemoveArtistFromAlbumAsync([FromQuery] int albumId, [FromQuery] int artistId)
+        {
+            var artist = await _artistService.GetArtistByIdAsync(artistId);
+
+            if (artist == null)
+                return NotFound();
+
+            if (await _albumService.RemoveArtistFromAlbumAsync(albumId, artist))
+                return Ok();
+            return BadRequest();
+        }
+
+        /// <summary>      
+        /// Adds genre to album
+        /// </summary>
+        /// <response code="200"> Add genre to album successfully</response>
+        /// <response code="400"> Add genre to album failed</response>
+        /// <response code="404"> Cannot find the genre</response>
+        [HttpPatch("add-genre")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> AddGenreToAlbumAsync([FromQuery] int albumId, [FromQuery] int genreId)
+        {
+            var genre = await _genreService.GetGenreByIdAsync(genreId);
+
+            if (genre == null)
+                return NotFound();
+
+            if (await _albumService.AddGenreToAlbumAsync(albumId, genre))
+                return Ok();
+            return BadRequest();
+        }
+
+        /// <summary>      
+        /// Removes genre from album
+        /// </summary>
+        /// <response code="200"> Remove genre from album successfully</response>
+        /// <response code="400"> Remove genre from album failed</response>
+        /// <response code="404"> Cannot find the genre</response>
+        [HttpPatch("remove-genre")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> RemoveGenreFromAlbumAsync([FromQuery] int albumId, [FromQuery] int genreId)
+        {
+            var genre = await _genreService.GetGenreByIdAsync(genreId);
+
+            if (genre == null)
+                return NotFound();
+
+            if (await _albumService.RemoveGenreFromAlbumAsync(albumId, genre))
+                return Ok();
+            return BadRequest();
+        }
     }
 }

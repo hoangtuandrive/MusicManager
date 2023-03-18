@@ -82,5 +82,41 @@ namespace MusicManager.API.Interfaces.Services
         /// <param name="song">The song to remove from the album.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains a Boolean value indicating whether the operation was successful.</returns>
         Task<bool> RemoveSongFromAlbumAsync(int albumId, Song song);
+
+
+        /// <summary>
+        /// Adds an artist to the specified album asynchronously.
+        /// </summary>
+        /// <param name="albumId">The ID of the album to add the artist to.</param>
+        /// <param name="artist">The artist to add to the album.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a Boolean value indicating whether the operation was successful.</returns>
+        Task<bool> AddArtistToAlbumAsync(int albumId, Artist artist);
+
+
+        /// <summary>
+        /// Remove an artist from the specified album asynchronously.
+        /// </summary>
+        /// <param name="albumId">The ID of the album to remove the song from.</param>
+        /// <param name="artist">The artist to remove from the album.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a Boolean value indicating whether the operation was successful.</returns>
+        Task<bool> RemoveArtistFromAlbumAsync(int albumId, Artist artist);
+
+
+        /// <summary>
+        /// Adds a genre to the specified album asynchronously.
+        /// </summary>
+        /// <param name="albumId">The ID of the album to add the genre to.</param>
+        /// <param name="genre">The genre to add to the album.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a Boolean value indicating whether the operation was successful.</returns>
+        Task<bool> AddGenreToAlbumAsync(int albumId, Genre genre);
+
+
+        /// <summary>
+        /// Remove a genre from the specified album asynchronously.
+        /// </summary>
+        /// <param name="albumId">The ID of the album to remove the genre from.</param>
+        /// <param name="genre">The genre to remove from the album.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a Boolean value indicating whether the operation was successful.</returns>
+        Task<bool> RemoveGenreFromAlbumAsync(int albumId, Genre genre);
     }
 }

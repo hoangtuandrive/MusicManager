@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MusicManager.API.Interfaces.Services;
-using MusicManager.API.Services;
+using MusicManager.Application.Interfaces.Services;
+using MusicManager.Application.Services;
 
 namespace MusicManager.Application.Extensions
 {

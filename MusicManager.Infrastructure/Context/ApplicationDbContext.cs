@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MusicManager.Domain.Entities;
 
-namespace MusicManager.API.Data
+namespace MusicManager.Infrastructure.Context
 {
     public class ApplicationDbContext : DbContext
     {

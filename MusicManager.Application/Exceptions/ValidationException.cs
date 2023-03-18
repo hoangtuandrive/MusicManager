@@ -1,6 +1,6 @@
 ﻿using FluentValidation.Results;
 
-namespace MusicManager.API.Exceptions
+namespace MusicManager.Application.Exceptions
 {
     /// <summary>
     /// Represents an exception that is thrown when validation fails.

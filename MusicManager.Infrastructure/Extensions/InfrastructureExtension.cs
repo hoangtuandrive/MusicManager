@@ -13,6 +13,8 @@ namespace MusicManager.Infrastructure.Extensions
 {
     public static class InfrastructureExtension
     {
+
+
         /// <summary>
         /// Extension method to add Infrastructure services to the IServiceCollection.
         /// </summary>
@@ -27,13 +29,14 @@ namespace MusicManager.Infrastructure.Extensions
             #region Repositories
 
             services.AddScoped<IArtistRepository, ArtistRepository>();
-
+            services.AddScoped<IGenreRepository, GenreRepository>();
             #endregion Repositories
 
 
             #region Services
 
             services.AddScoped<IArtistService, ArtistService>();
+            services.AddScoped<IGenreService, GenreService>();
 
             // Add automapper
             var mapperConfig = new MapperConfiguration(mc =>

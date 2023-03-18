@@ -13,8 +13,8 @@ namespace MusicManager.Domain.Entities
         public string? AvatarImg { get; set; }
         [Column(TypeName = "date")]
         public DateTime ReleaseDate { get; set; }
-        public DateTime CreatedOn { get; set; } = DateTime.Now;
-        public DateTime UpdatedOn { get; set; } = DateTime.Now;
+        public DateTime CreatedOn { get; set; }
+        public DateTime UpdatedOn { get; set; }
         public ICollection<Artist> Artists { get; set; }
         public ICollection<Song> Songs { get; set; }
         public ICollection<Genre> Genres { get; set; }

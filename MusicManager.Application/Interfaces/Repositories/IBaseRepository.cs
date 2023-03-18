@@ -7,8 +7,15 @@ namespace MusicManager.Application.Interfaces.Repositories
     /// <summary>
     /// Interface for Base Repository.
     /// </summary>
+
+
+    /// <summary>
+    /// Interface for Base Repository.
+    /// </summary>
     public interface IBaseRepository<T>
     {
+
+
         /// <summary>
         /// Gets a list of IQueryable objects.
         /// </summary>
@@ -24,7 +31,17 @@ namespace MusicManager.Application.Interfaces.Repositories
         /// <summary>
         /// Gets all tasks asynchronously.
         /// </summary>
+
+
+        /// <summary>
+        /// Gets all tasks asynchronously.
+        /// </summary>
         Task<IEnumerable<T>> GetAllAsync();
+
+
+        /// <summary>
+        /// Finds an IEnumerable based on the given Expression.
+        /// </summary>
 
 
         /// <summary>
@@ -36,7 +53,17 @@ namespace MusicManager.Application.Interfaces.Repositories
         /// <summary>
         /// Adds the specified entity asynchronously.
         /// </summary>
+
+
+        /// <summary>
+        /// Adds the specified entity asynchronously.
+        /// </summary>
         Task<bool> AddAsync(T entity);
+
+
+        /// <summary>
+        /// Adds a range of entities asynchronously.
+        /// </summary>
 
 
         /// <summary>
@@ -48,7 +75,17 @@ namespace MusicManager.Application.Interfaces.Repositories
         /// <summary>
         /// Removes the specified entity from the collection.
         /// </summary>
+
+
+        /// <summary>
+        /// Removes the specified entity from the collection.
+        /// </summary>
         void Remove(T entity);
+
+
+        /// <summary>
+        /// Removes a range of entities from the collection.
+        /// </summary>
 
 
         /// <summary>
@@ -61,13 +98,29 @@ namespace MusicManager.Application.Interfaces.Repositories
         /// Updates the specified entity.
         /// </summary>
         /// <param name="entity">The entity to update.</param>
+
+
+        /// <summary>
+        /// Updates the specified entity.
+        /// </summary>
+        /// <param name="entity">The entity to update.</param>
         void Update(T entity);
 
 
         /// <summary>
         /// Asynchronously completes the task.
         /// </summary>
+
+
+        /// <summary>
+        /// Asynchronously completes the task.
+        /// </summary>
         Task<bool> CompleteAsync();
+
+
+        /// <summary>
+        /// Releases all resources used by the current instance of the Dispose class.
+        /// </summary>
 
 
         /// <summary>

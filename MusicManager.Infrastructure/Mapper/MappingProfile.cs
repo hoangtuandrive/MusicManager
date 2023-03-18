@@ -10,6 +10,7 @@ namespace MusicManager.Infrastructure.Mapper
         {
             CreateMap<CreateArtistDTO, Artist>();
             CreateMap<UpdateArtistDTO, Artist>();
+            CreateMap<GenreDTO, Genre>();
         }
     }
 }

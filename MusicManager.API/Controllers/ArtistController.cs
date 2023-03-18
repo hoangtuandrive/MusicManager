@@ -4,6 +4,8 @@ using MusicManager.Domain.DTOs;
 
 namespace MusicManager.API.Controllers
 {
+
+
     /// <summary>
     /// Controller class for managing Artists.
     /// </summary>

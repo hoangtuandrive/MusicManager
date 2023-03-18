@@ -17,7 +17,6 @@ namespace MusicManager.Infrastructure.Services
             _mapper = mapper;
         }
 
-
         public async Task<IEnumerable<Artist>> GetArtistListAsync()
         {
             return await _artistRepo.GetAllAsync();
@@ -56,10 +55,9 @@ namespace MusicManager.Infrastructure.Services
         /// True if update artist successfully. 
         /// False if there's no artist in the database, or update artist failed.
         /// </returns>
-        public async Task<bool> UpdateArtistAsync(int id, UpdateArtistDTO updateArtistDTO)
+        public async Task<bool> UpdateArtistAsync(Artist artist, UpdateArtistDTO updateArtistDTO)
         {
-            Artist artist = _mapper.Map<Artist>(updateArtistDTO);
-            artist.Id = id;
+            _mapper.Map(updateArtistDTO, artist);
 
             _artistRepo.Update(artist);
             return await _artistRepo.CompleteAsync();
@@ -74,10 +72,20 @@ namespace MusicManager.Infrastructure.Services
         /// True if update artist successfully. 
         /// False if there's no artist in the database, or update artist failed.
         /// </returns>
-        public async Task<bool> DeleteArtistAsync(Artist artistDb)
+        public async Task<bool> DeleteArtistAsync(Artist artist)
         {
-            _artistRepo.Remove(artistDb);
+            _artistRepo.Remove(artist);
             return await _artistRepo.CompleteAsync();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>A list of artists whether the specified name substring occured in the artist's name</returns>
+        public async Task<IEnumerable<Artist>> FindArtistByNameAsync(string name)
+        {
+            return await _artistRepo.FindArtistByNameAsync(name);
         }
     }
 }

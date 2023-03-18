@@ -18,9 +18,9 @@ namespace MusicManager.API.Controllers
 
 
         /// <summary>      
-        /// Returns a list of Artists.
+        /// Returns a list of artists.
         /// </summary>
-        /// <response code="200">Returns a list of Artists.</response>
+        /// <response code="200">Returns a list of artists.</response>
         [HttpGet]
         [ProducesResponseType(200)]
         public async Task<IActionResult> FetchArtistListAsync()
@@ -57,12 +57,12 @@ namespace MusicManager.API.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> UpdateArtistAsync([FromRoute] int id, [FromBody] UpdateArtistDTO updateArtistDTO)
         {
-            var artist = _artistService.GetArtistByIdAsync(id).Result;
+            var artist = await _artistService.GetArtistByIdAsync(id);
 
             if (artist == null)
                 return NotFound();
 
-            if (await _artistService.UpdateArtistAsync(id, updateArtistDTO))
+            if (await _artistService.UpdateArtistAsync(artist, updateArtistDTO))
                 return Ok();
 
             return BadRequest();
@@ -80,7 +80,7 @@ namespace MusicManager.API.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> DeleteArtistAsync([FromRoute] int id)
         {
-            var artist = _artistService.GetArtistByIdAsync(id).Result;
+            var artist = await _artistService.GetArtistByIdAsync(id);
 
             if (artist == null)
                 return NotFound();
@@ -89,6 +89,18 @@ namespace MusicManager.API.Controllers
                 return Ok();
 
             return BadRequest();
+        }
+
+        /// <summary>      
+        /// Find a list of artists with specified name
+        /// </summary>
+        /// <response code="200"> Returns a list of artists with specfied name.</response>
+        [HttpGet("find")]
+        [ProducesResponseType(200)]
+        public async Task<IActionResult> FindArtistByNameAsync([FromQuery] string name)
+        {
+            var artistList = await _artistService.FindArtistByNameAsync(name);
+            return Ok(artistList);
         }
     }
 }

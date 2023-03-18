@@ -12,7 +12,7 @@ namespace MusicManager.API.Mapper
     {
         public MappingProfile()
         {
-            // DTOS and Domain Entities
+            // DTOS to Domain Entities
             CreateMap<CreateArtistDTO, Artist>();
             CreateMap<UpdateArtistDTO, Artist>();
             CreateMap<GenreDTO, Genre>();
@@ -24,7 +24,7 @@ namespace MusicManager.API.Mapper
             CreateMap<AlbumDTO, Album>();
 
 
-            // Domain Entities and ResponseModel
+            // Domain Entities to ResponseModel
             CreateMap<Song, GetSongResponseModel>()
                 .ForMember(dest => dest.Artists, opt => opt.MapFrom(src => src.Artists.Select(c => new ArtistResponseModel { Id = c.Id, Name = c.Name }).ToList()))
                 .ForMember(dest => dest.Albums, opt => opt.MapFrom(src => src.Albums.Select(c => new AlbumResponseModel { Id = c.Id, Name = c.Name }).ToList()))

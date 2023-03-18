@@ -136,5 +136,67 @@ namespace MusicManager.API.Services
         {
             return await _songRepo.List().Where(x => x.Name.Equals(name)).FirstOrDefaultAsync();
         }
+
+
+        public async Task<bool> AddArtistToSongAsync(int songId, Artist artist)
+        {
+            var song = await _songRepo.List()
+               .Where(x => x.Id == songId)
+             .Include(x => x.Artists)
+             .FirstOrDefaultAsync();
+
+            if (song == null)
+                return false;
+            song.Artists.Add(artist);
+
+            _songRepo.Update(song);
+            return await _songRepo.CompleteAsync();
+        }
+
+
+        public async Task<bool> RemoveArtistFromSongAsync(int songId, Artist artist)
+        {
+            var song = await _songRepo.List()
+               .Where(x => x.Id == songId)
+             .Include(x => x.Artists)
+             .FirstOrDefaultAsync();
+
+            if (song == null)
+                return false;
+            song.Artists.Remove(artist);
+
+            _songRepo.Update(song);
+            return await _songRepo.CompleteAsync();
+        }
+
+        public async Task<bool> AddGenreToSongAsync(int songId, Genre genre)
+        {
+            var song = await _songRepo.List()
+                .Where(x => x.Id == songId)
+              .Include(x => x.Genres)
+              .FirstOrDefaultAsync();
+
+            if (song == null)
+                return false;
+            song.Genres.Add(genre);
+
+            _songRepo.Update(song);
+            return await _songRepo.CompleteAsync();
+        }
+
+        public async Task<bool> RemoveGenreFromSongAsync(int songId, Genre genre)
+        {
+            var song = await _songRepo.List()
+               .Where(x => x.Id == songId)
+             .Include(x => x.Genres)
+             .FirstOrDefaultAsync();
+
+            if (song == null)
+                return false;
+            song.Genres.Remove(genre);
+
+            _songRepo.Update(song);
+            return await _songRepo.CompleteAsync();
+        }
     }
 }
